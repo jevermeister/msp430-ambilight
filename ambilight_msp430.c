@@ -46,12 +46,12 @@ main (void)
   P1SEL = BIT1 + BIT2;
   P1SEL2 = BIT1 + BIT2;
 
-  /* pins 2.1(red) and 2.5(blue) */
+  /* pins 2.1(green) and 2.5(blue) */
   P2DIR = BIT1 | BIT5;
   P2OUT = 0x00;
   P2SEL = BIT1 | BIT5;
 
-  /* pin 1.6(green) */
+  /* pin 1.6(red) */
   P1DIR |= BIT0 | BIT6;
   P1OUT = 0x00;
   P1SEL |= BIT6;
@@ -104,11 +104,11 @@ interrupt (USCIAB0RX_VECTOR) USCI0RX_ISR ()
       switch (g_laststate)
 	{
 	case header:
-	  TA1CCR1 = calcdutycycle (g_receivedchar);	/* red */
+	  TA0CCR1 = calcdutycycle (g_receivedchar);	/* red */
 	  g_laststate = red;
 	  break;
 	case red:
-	  TA0CCR1 = calcdutycycle (g_receivedchar);	/* green */
+	  TA1CCR1 = calcdutycycle (g_receivedchar);	/* green */
 	  g_laststate = green;
 	  break;
 	case green:
